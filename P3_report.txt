@@ -1,0 +1,10 @@
+﻿Project 3 Report
+Group Members and Workload: 
+Joshua Kim, Daniel Cardenas: virtualmemorymanager.cc
+
+
+1. Since this project only required us to work on one function, we did a fair share of the work between the two of us. We both looked over the other files that helped us come up with the solution, and met up to come up with the function implementation together, and helped each other figure out how to fix certain errors we were getting.
+
+
+2. VirtualMemoryManager::swapPageIn(int virtAddr):
+The purpose of the function is to load the desired physical page from SWAP to memory, where the physical page corresponds a virtual page. Our goal was to add the second chance page replacement policy and make sure a dirty page is copied back to the SWAP area. For our implementation, we first have to verify if there are any pages still available, if there aren’t, we exit out of the function. We then make the assumption that the page isn’t taken by any process space. If the space is equal to NULL, we just update physPageInfo and currPageEntry as well as load a page to the current victim and update the next victim page. If the space does not equal NULL, we make a TranslationEntry pointer, which will be the page used for ejecting. While that page has been recently accessed, we update the next victim page, in turn changing the physPageInfo as well as getting a new page for ejecting. If the page for ejection has been modified, we call the writeToSwap function on the page for ejection. Then we update physPageInfo and currPageEntry with currPageEntry’s physical page being our pageForEjection’s physical page, as well as load a page to the current victim and update the next victim page.
